@@ -3,23 +3,38 @@
 
 long long find_invalid(long long min, long long max) {
 	long long total = 0;
-	char id_str[32];
+	char str[32];
 
-	for(long long id = min; id <= max; id++) {
-		memset(id_str, 0, sizeof(id_str));
-		sprintf(id_str, "%lld", id);
-		size_t len = strlen(id_str);
+	#pragma omp parallel for reduction(+:total) private(str)
+	for (long long i = min; i <= max; i++) {
+		sprintf(str, "%lld", i);
+		size_t len = strlen(str);
 
-		char d[len*2+1];
-		memset(d, 0, sizeof(d));
+		for (size_t sz = len/2; sz >= 1; sz--) {
+			if (len % sz != 0)
+				continue;
 
-		strcat(d, id_str);
-		strcat(d, id_str);
-		char *new = d + 1;
-		new[strlen(new)-1] = '\0';
+			char first[32];
+			strncpy(first, str, sz);
+			first[sz] = '\0';
 
-		if(strstr(new, id_str) != NULL)
-			total += id;
+			int yes=1;
+
+			for (size_t j=sz; j<len; j += sz) {
+				char new[32];
+				strncpy(new, str + j, sz);
+				new[sz] = '\0';
+
+				if (strcmp(first, new) != 0) {
+					yes=0;
+					break;
+				}
+			}
+			if(!yes) continue;
+
+			total += i;
+			break;
+		}
 	}
 	return total;
 }
