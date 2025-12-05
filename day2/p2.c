@@ -3,35 +3,23 @@
 
 long long find_invalid(long long min, long long max) {
 	long long total = 0;
-	char str[32];
+	char id_str[32];
 
-	for(long long i = min; i <= max; i++) {
-		memset(str, 0, sizeof(str));
-		sprintf(str, "%lld", i);
-		size_t len = strlen(str);
+	for(long long id = min; id <= max; id++) {
+		memset(id_str, 0, sizeof(id_str));
+		sprintf(id_str, "%lld", id);
+		size_t len = strlen(id_str);
 
-		for(int slen = 1; slen <= len/2; slen++) {
-			if(len % slen != 0)
-				continue;
+		char d[len*2+1];
+		memset(d, 0, sizeof(d));
 
-			int r = len/slen;
-			char first[32];
+		strcat(d, id_str);
+		strcat(d, id_str);
+		char *new = d + 1;
+		new[strlen(new)-1] = '\0';
 
-			strncpy(first, str, slen);
-			first[slen] = '\0';
-
-			char s[32];
-			memset(s, 0, sizeof(s));
-
-			for(int j=0; j<r; j++)
-				strcat(s, first);
-
-			if(strcmp(s, str) == 0) {
-				total += i;
-				printf("Repeating: %lld\n", i);
-				break;
-			}
-		}
+		if(strstr(new, id_str) != NULL)
+			total += id;
 	}
 	return total;
 }
