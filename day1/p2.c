@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 	if(fptr == NULL) {
-		fprintf(stderr, "File provided doesnt exist\n");
+		perror("fopen");
 		return 0;
 	}
 
