@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// #define NUMBAT 2
-#define NUMBAT 12 // part 2 lol
-
 unsigned int top(char* str, int start, int end) {
 	int hidx=start;
 
@@ -25,7 +22,8 @@ void solve(FILE *input) {
 		long long ans = 0;
 		int hidx = -1;
 
-		int t=NUMBAT;
+		// int t=2; (part 1 lol)
+		int t=12;
 		while(t--) {
 			hidx = top(str, hidx+1, strlen(str) - t);
 			ans += str[hidx] - '0';
