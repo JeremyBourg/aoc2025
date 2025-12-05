@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void solve() {
+void solve(FILE *input) {
 
 }
 
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	solve();
+	solve(fptr);
 
 	fclose(fptr);
 	return 0;
