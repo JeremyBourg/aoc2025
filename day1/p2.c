@@ -14,11 +14,27 @@ void solve(FILE *input) {
 
 		if(s[0] == 'L')
 			dir = LEFT;
-		pos = (pos + (atoi(m) * dir));
-		if(pos <= 0 || pos > 100) {
+		int mov = atoi(m);
+
+		while(mov > 100) {
 			count++;
-			pos %= 100;
+			mov -= 100;
 		}
+		mov *= dir;
+		if(pos + mov < 0 && pos != 0) {
+			count++;
+		}
+		else if(pos + mov > 100) {
+			count++;
+		}
+
+		pos += mov;
+		pos %= 100;
+		if(pos == 0) {
+			count++;
+		}
+		if(pos < 0)
+			pos += 100;
 	}
 	printf("%d\n", count);
 }
