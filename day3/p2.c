@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NUMBAT 2
+// #define NUMBAT 2
+#define NUMBAT 12 // part 2 lol
 
 unsigned int top(char* str, int start, int end) {
 	int hidx=start;
