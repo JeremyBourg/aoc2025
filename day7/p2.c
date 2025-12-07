@@ -3,24 +3,30 @@
 
 void solve(FILE *input) {
 	char str[1024];
-	int rays[1024];
-	int count = 0;
+	long long rays[1024];
+	memset(rays, 0, sizeof(rays));
+	long long count = 0;
 	while(fgets(str, sizeof(str), input)) {
 		for(int i=0; i<strlen(str); i++) {
-			if(str[i] == 'S')
+			if(str[i] == 'S') {
 				rays[i] = 1;
-			if(str[i] == '^' && rays[i] == 1) {
-				rays[i] = 0;
-				count++;
-
+			}
+			if(str[i] == '^' && rays[i] > 0) {
 				if(i < strlen(str) - 1)
-					rays[i+1] = 1;
+					rays[i+1] += rays[i];
 				if(i > 0)
-					rays[i-1] = 1;
+					rays[i-1] += rays[i];
+
+				rays[i] = 0;
 			}
 		}
 	}
-	printf("%d\n", count);
+
+	for(int j=0; j < sizeof(rays)/sizeof(rays[0]); j++) {
+		count += rays[j];
+	}
+
+	printf("%lld\n", count);
 }
 
 int main(int argc, char *argv[]) {
